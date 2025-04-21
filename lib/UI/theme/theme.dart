@@ -71,7 +71,7 @@ class AppSize {
 }
 
 ///
-/// Definition of App Theme
+/// Definition of App Theme......
 ///
 ThemeData appTheme = ThemeData(
   fontFamily: 'Exo 2',
