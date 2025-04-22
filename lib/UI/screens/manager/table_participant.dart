@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 
 class ParticipantsBody extends StatelessWidget {
   const ParticipantsBody({super.key});
@@ -58,7 +59,7 @@ class ParticipantsBody extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.red,
+                  color: const Color.fromARGB(255, 214, 15, 1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
