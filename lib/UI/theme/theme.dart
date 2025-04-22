@@ -36,7 +36,7 @@ class AppColors {
 class AppTextStyles {
   static TextStyle heading = TextStyle(
     fontSize: 20,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w700,
   );
 
   static TextStyle title = TextStyle(fontSize: 26, fontWeight: FontWeight.w400);
@@ -71,9 +71,10 @@ class AppSize {
 }
 
 ///
-/// Definition of App Theme.
+/// Definition of App Theme......
 ///
 ThemeData appTheme = ThemeData(
   fontFamily: 'Exo 2',
-  scaffoldBackgroundColor: Colors.white,
+
+  //scaffoldBackgroundColor: AppColors.backGroundColor,
 );
