@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:race_tracking_app_g14/UI/providers/participant_provider.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
+import 'package:race_tracking_app_g14/data/repository/firebase_participant_repository.dart';
+import 'package:race_tracking_app_g14/data/repository/participant_repostory.dart';
 
 void main() {
-  runApp(const MyApp());
+  final ParticipantRepostory participantRepostory =
+      FirebaseParticipantRepository();
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ParticipantProvider(participantRepostory),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
