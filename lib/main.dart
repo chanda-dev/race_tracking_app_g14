@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,7 +10,38 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(appBar: AppBar(title: Text('Your work'))),
+      debugShowCheckedModeBanner: false,
+      theme: appTheme,
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColors.backGroundColor,
+          elevation: 4.0,
+          shadowColor: AppColors.thirdColor,
+          title: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'RACE TRACKING ',
+                  style: TextStyle(
+                    color: AppColors.secondaryColor,
+                    fontSize: AppTextStyles.heading.fontSize,
+                    fontWeight: AppTextStyles.heading.fontWeight,
+                  ),
+                ),
+                Text(
+                  'APP',
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontSize: AppTextStyles.heading.fontSize,
+                    fontWeight: AppTextStyles.heading.fontWeight,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
