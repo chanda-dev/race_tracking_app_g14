@@ -30,9 +30,6 @@ class AppColors {
   }
 }
 
-///
-/// Definition of App text styles.
-///
 class AppTextStyles {
   static TextStyle heading = TextStyle(
     fontSize: 20,
