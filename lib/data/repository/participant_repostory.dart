@@ -8,6 +8,9 @@ abstract class ParticipantRepostory {
     required String bibNumber,
     required String lastName,
     required int age,
+    required Duration swimmingTime,
+    required Duration runningTime,
+    required Duration cyclingTime,
   });
   Future<void> updateParticipant({
     required String id,

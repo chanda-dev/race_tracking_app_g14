@@ -36,15 +36,25 @@ class ParticipantProvider extends ChangeNotifier {
     String bibNumber,
     String firstName,
     String lastName,
-    int age,
-  ) async {
-    await _repository.addParticipant(
-      firstName: firstName,
-      bibNumber: bibNumber,
-      lastName: lastName,
-      age: age,
-    );
-    fetchParticipant();
+    int age, {
+    Duration runningTime = Duration.zero,
+    Duration swimmingTime = Duration.zero,
+    Duration cyclingTime = Duration.zero,
+  }) async {
+    try {
+      await _repository.addParticipant(
+        firstName: firstName,
+        bibNumber: bibNumber,
+        lastName: lastName,
+        age: age,
+        swimmingTime: swimmingTime,
+        runningTime: runningTime,
+        cyclingTime: cyclingTime,
+      );
+      fetchParticipant();
+    } catch (error) {
+      throw Exception('Failed to add participant: $error');
+    }
   }
 
   void updateParticipant(
@@ -87,6 +97,27 @@ class ParticipantProvider extends ChangeNotifier {
       }
     } else {
       fetchParticipant();
+    }
+  }
+
+  void undoDeleteParticipant(Participant participant) async {
+    if (participantState != null && participantState!.data != null) {
+      participantState!.data!.add(participant);
+      notifyListeners();
+
+      try {
+        await _repository.addParticipant(
+          firstName: participant.firstName,
+          bibNumber: participant.bibNumber,
+          lastName: participant.lastName,
+          age: participant.age,
+          swimmingTime: participant.swimmingTime,
+          runningTime: participant.runningTime,
+          cyclingTime: participant.cyclingTime,
+        );
+      } catch (error) {
+        throw Exception('Failed to undo delete: $error');
+      }
     }
   }
 }

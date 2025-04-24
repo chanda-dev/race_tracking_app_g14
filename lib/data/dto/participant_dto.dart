@@ -16,13 +16,13 @@ class ParticipantDto {
   static Participant fromJson(String id, Map<String, dynamic> json) {
     return Participant(
       id: id,
-      bibNumber: json['bibNumber'],
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      age: json['age'],
-      runningTime: Duration(milliseconds: json['runningTime']),
-      swimmingTime: Duration(milliseconds: json['swimmingTime']),
-      cyclingTime: Duration(milliseconds: json['cyclingTime']),
+      bibNumber: json['bibNumber'] ?? '',
+      firstName: json['firstName'] ?? '',
+      lastName: json['lastName'] ?? '',
+      age: json['age'] ?? 0,
+      runningTime: Duration(milliseconds: json['runningTime'] ?? 0),
+      swimmingTime: Duration(milliseconds: json['swimmingTime'] ?? 0),
+      cyclingTime: Duration(milliseconds: json['cyclingTime'] ?? 0),
     );
   }
 }

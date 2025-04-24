@@ -20,6 +20,9 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
     required int age,
     required String firstName,
     required String lastName,
+    required Duration runningTime,
+    required Duration swimmingTime,
+    required Duration cyclingTime,
   }) async {
     // Create a new data
     final newParticipantData = {
@@ -27,6 +30,9 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
       'firstName': firstName,
       'lastName': lastName,
       'age': age,
+      'runningTime': runningTime.inMilliseconds,
+      'swimmingTime': swimmingTime.inMilliseconds,
+      'cyclingTime': cyclingTime.inMilliseconds,
     };
     final http.Response response = await http.post(
       uri,
@@ -58,7 +64,7 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
   @override
   Future<List<Participant>> getAllParticipant() async {
     final http.Response response = await http.get(uri);
-
+    print('Response from Firebase: ${response.body}');
     // Handle errors
     if (response.statusCode != HttpStatus.ok &&
         response.statusCode != HttpStatus.created) {
