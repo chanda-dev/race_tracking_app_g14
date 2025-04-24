@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/participant_provider.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/homepage.dart';
+import 'package:race_tracking_app_g14/UI/screens/manager/navbarpage.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/table_participant.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 import 'package:race_tracking_app_g14/data/repository/firebase_participant_repository.dart';
@@ -32,8 +33,29 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int selectedIndex = 2;
+
+  void onOpenParticipantForm() {
+    Navigator.of(context).push(
+      AnimationUtils.createTopToBottomRoute(
+        ParticipantsBody(onOpenParticipantForm: onOpenParticipantForm),
+      ),
+    );
+  }
+
+  void onIconTap(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +88,18 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Homepage(), // << ADD YOUR BODY HERE
+      body: Builder(
+        builder: (BuildContext context) {
+          if (selectedIndex == 0) {
+            return Homepage(onOpenParticipantForm: onOpenParticipantForm);
+          }
+          return Center(child: Text('selectindex $selectedIndex'));
+        },
+      ),
+      bottomNavigationBar: Navbarpage(
+        selectedIndex: selectedIndex,
+        onIconTap: onIconTap,
+      ),
     );
   }
 }

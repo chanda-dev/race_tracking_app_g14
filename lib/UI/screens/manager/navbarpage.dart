@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 
-class Navbarpage extends StatefulWidget {
-  const Navbarpage({super.key});
+class Navbarpage extends StatelessWidget {
+  final int selectedIndex;
+  final ValueChanged<int> onIconTap;
 
-  @override
-  State<Navbarpage> createState() => _NavbarpageState();
-}
+  const Navbarpage({
+    super.key,
+    required this.selectedIndex,
+    required this.onIconTap,
+  });
 
-class _NavbarpageState extends State<Navbarpage> {
-  int _selectedIndex = 2; // Center item selected by default
-
-  final List<IconData> _icons = [
+  final List<IconData> _icons = const [
     Icons.home,
     Icons.group,
     Icons.directions_run,
@@ -21,32 +21,22 @@ class _NavbarpageState extends State<Navbarpage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          'Selected Tab: $_selectedIndex',
-          style: const TextStyle(fontSize: 24),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: List.generate(_icons.length, (index) {
-            final bool isCenter = index == 2;
-            final bool isSelected = index == _selectedIndex;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(_icons.length, (index) {
+          final bool isCenter = index == 2;
+          final bool isSelected = index == selectedIndex;
 
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.all(12),
-                decoration: isCenter
-                    ? BoxDecoration(
+          return GestureDetector(
+            onTap: () => onIconTap(index),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.all(12),
+              decoration:
+                  isCenter
+                      ? BoxDecoration(
                         color: AppColors.primarys,
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: const [
@@ -54,21 +44,23 @@ class _NavbarpageState extends State<Navbarpage> {
                             color: Colors.black26,
                             blurRadius: 10,
                             offset: Offset(0, 4),
-                          )
+                          ),
                         ],
                       )
-                    : const BoxDecoration(),
-                child: Icon(
-                  _icons[index],
-                  size: 28,
-                  color: isCenter
-                      ? AppColors.backgroundColors
-                      : (isSelected ? AppColors.primarys : AppColors.thirdColors),
-                ),
+                      : const BoxDecoration(),
+              child: Icon(
+                _icons[index],
+                size: 28,
+                color:
+                    isCenter
+                        ? AppColors.backgroundColors
+                        : (isSelected
+                            ? AppColors.primarys
+                            : AppColors.thirdColors),
               ),
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

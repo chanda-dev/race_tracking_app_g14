@@ -90,29 +90,38 @@ class ParticipantsBody extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: DataTable(
-                  headingRowColor: WidgetStateProperty.all(Colors.red),
-                  headingTextStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: DataTable(
+                    border: TableBorder.symmetric(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(4),
+                        topRight: Radius.circular(4),
+                      ),
+                    ),
+                    headingRowColor: WidgetStateProperty.all(AppColors.primary),
+                    headingTextStyle: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    columns: const [
+                      DataColumn(label: Text('BIB')),
+                      DataColumn(label: Text('NAME')),
+                      DataColumn(label: Text('AGE')),
+                    ],
+                    rows:
+                        participants
+                            .map(
+                              (participant) => DataRow(
+                                cells: [
+                                  DataCell(Text(participant['BIB'])),
+                                  DataCell(Text(participant['NAME'])),
+                                  DataCell(Text(participant['AGE'].toString())),
+                                ],
+                              ),
+                            )
+                            .toList(),
                   ),
-                  columns: const [
-                    DataColumn(label: Text('BIB')),
-                    DataColumn(label: Text('NAME')),
-                    DataColumn(label: Text('AGE')),
-                  ],
-                  rows:
-                      participants
-                          .map(
-                            (participant) => DataRow(
-                              cells: [
-                                DataCell(Text(participant['BIB'])),
-                                DataCell(Text(participant['NAME'])),
-                                DataCell(Text(participant['AGE'].toString())),
-                              ],
-                            ),
-                          )
-                          .toList(),
                 ),
               ),
             ),
