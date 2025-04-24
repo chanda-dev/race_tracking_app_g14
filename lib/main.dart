@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/participant_provider.dart';
+import 'package:race_tracking_app_g14/UI/screens/manager/homepage.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/table_participant.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 import 'package:race_tracking_app_g14/data/repository/firebase_participant_repository.dart';
 import 'package:race_tracking_app_g14/data/repository/participant_repostory.dart';
+import 'package:race_tracking_app_g14/utils/animations_util.dart';
 
 void main() {
   final ParticipantRepostory participantRepostory =
@@ -64,7 +66,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: const ParticipantsBody(), // << ADD YOUR BODY HERE
+      body: Homepage(), // << ADD YOUR BODY HERE
     );
   }
 }

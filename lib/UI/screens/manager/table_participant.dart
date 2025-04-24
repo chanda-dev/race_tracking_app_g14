@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 
 class ParticipantsBody extends StatelessWidget {
-  const ParticipantsBody({super.key});
+  final VoidCallback onOpenParticipantForm;
+  const ParticipantsBody({super.key, required this.onOpenParticipantForm});
 
   final List<Map<String, dynamic>> participants = const [
     {'BIB': '001', 'NAME': 'Sok Chanda', 'AGE': 25},
@@ -59,7 +60,7 @@ class ParticipantsBody extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 214, 15, 1),
+                  color: AppColors.primary,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -73,7 +74,10 @@ class ParticipantsBody extends StatelessWidget {
               ),
               const Spacer(),
               IconButton(icon: const Icon(Icons.search), onPressed: () {}),
-              IconButton(icon: const Icon(Icons.person_add), onPressed: () {}),
+              IconButton(
+                icon: const Icon(Icons.person_add),
+                onPressed: onOpenParticipantForm,
+              ),
             ],
           ),
         ),
@@ -87,7 +91,7 @@ class ParticipantsBody extends StatelessWidget {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: DataTable(
-                  headingRowColor: MaterialStateProperty.all(Colors.red),
+                  headingRowColor: WidgetStateProperty.all(Colors.red),
                   headingTextStyle: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
