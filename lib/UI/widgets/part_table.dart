@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/async_value.dart';
 import 'package:race_tracking_app_g14/UI/providers/participant_provider.dart';
+import 'package:race_tracking_app_g14/UI/screens/form_update_participant.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 import 'package:race_tracking_app_g14/UI/widgets/participate_cart.dart';
 import 'package:race_tracking_app_g14/models/participant/participant_model.dart';
+import 'package:race_tracking_app_g14/utils/animations_util.dart';
 
 class PartTable extends StatefulWidget {
   const PartTable({super.key});
@@ -14,29 +16,84 @@ class PartTable extends StatefulWidget {
 }
 
 class _PartTableState extends State<PartTable> {
+  String? activeCartId;
+
+  void toggleCart(String id) {
+    setState(() {
+      activeCartId = (activeCartId == id) ? null : id;
+    });
+  }
+
   void onDelete(Participant participant, BuildContext context) {
     final ParticipantProvider participantProvider = context.read();
     participantProvider.deleteParticipant(participant.id);
     final snackBar = SnackBar(
-      content: Text('Data delete'),
+      content: const Text('Participant deleted'),
       action: SnackBarAction(
         label: 'Undo',
-        onPressed:
-            () => {participantProvider.undoDeleteParticipant(participant)},
+        onPressed: () {
+          participantProvider.undoDeleteParticipant(participant);
+        },
       ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  bool isClick = false;
-  void onOpenParticipantForm() {}
-  void onCartPress() {
-    setState(() {
-      isClick = !isClick;
-    });
+  void onOpenParticipantForm() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Align(
+          alignment: Alignment.topCenter,
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              height: 300,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(AppSpacings.radius),
+                  topRight: Radius.circular(AppSpacings.radius),
+                ),
+              ),
+              child: AddParticipantScreen(mode: Mode.add),
+            ),
+          ),
+        );
+      },
+    );
   }
 
-  void onEdit(String id) {}
+  void onEdit(Participant participant) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Align(
+          alignment: Alignment.topCenter,
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              height: 300,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(AppSpacings.radius),
+                  topRight: Radius.circular(AppSpacings.radius),
+                ),
+              ),
+              child: AddParticipantScreen(
+                mode: Mode.update,
+                participant: participant,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final participantProvider = Provider.of<ParticipantProvider>(context);
@@ -57,9 +114,12 @@ class _PartTableState extends State<PartTable> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 children: [
-                  const Text(
+                  Text(
                     'List of Participants',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: AppTextStyles.heading.fontSize,
+                      fontWeight: AppTextStyles.heading.fontWeight,
+                    ),
                   ),
                   const SizedBox(width: 8),
                   Container(
@@ -89,52 +149,59 @@ class _PartTableState extends State<PartTable> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(color: AppColors.primary),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 16,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(color: AppColors.primary),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 16,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('BIB', style: TextStyle(color: AppColors.white)),
+                          Text(
+                            'Name',
+                            style: TextStyle(color: AppColors.white),
+                          ),
+                          Text('Age', style: TextStyle(color: AppColors.white)),
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('BIB', style: TextStyle(color: AppColors.white)),
-                        Text('Name', style: TextStyle(color: AppColors.white)),
-                        Text('Age', style: TextStyle(color: AppColors.white)),
-                      ],
-                    ),
-                  ),
+                    Expanded(
+                      child: Scrollbar(
+                        thumbVisibility: true,
+                        child: ListView.builder(
+                          //shrinkWrap: true,
+                          //physics: const NeverScrollableScrollPhysics(),
+                          itemCount: fetchParticipant.length,
+                          itemBuilder: (context, index) {
+                            final participant = fetchParticipant[index];
+                            final isClick = activeCartId == participant.id;
 
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: fetchParticipant.length,
-                    itemBuilder:
-                        (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8.0,
-                            horizontal: 16,
-                          ),
-                          child: ParticipateCart(
-                            bibNumber: fetchParticipant[index].bibNumber,
-                            firstName: fetchParticipant[index].firstName,
-                            lastName: fetchParticipant[index].lastName,
-                            age: fetchParticipant[index].age.toString(),
-                            isClick: isClick,
-                            onCartPress: onCartPress,
-                            onDelete:
-                                () =>
-                                    onDelete(fetchParticipant[index], context),
-                            id: fetchParticipant[index].id,
-                            onEdit: () => onEdit(fetchParticipant[index].id),
-                          ),
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                                horizontal: 16,
+                              ),
+                              child: ParticipateCart(
+                                participant: participant,
+                                isClick: isClick,
+                                onCartPress: () => toggleCart(participant.id),
+                                onDelete: () => onDelete(participant, context),
+                                onEdit: () => onEdit(participant),
+                              ),
+                            );
+                          },
                         ),
-                  ),
-                ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
+import 'package:race_tracking_app_g14/models/participant/participant_model.dart';
 
 class ParticipateCart extends StatelessWidget {
-  final String bibNumber;
-  final String firstName;
-  final String lastName;
-  final String age;
+  final Participant participant;
   final bool isClick;
   final VoidCallback onCartPress;
   final VoidCallback onDelete;
   final VoidCallback onEdit;
-  final String id;
   const ParticipateCart({
     super.key,
-    required this.bibNumber,
-    required this.firstName,
-    required this.lastName,
-    required this.age,
+    required this.participant,
     required this.isClick,
     required this.onCartPress,
     required this.onDelete,
     required this.onEdit,
-    required this.id,
   });
 
   @override
@@ -39,7 +32,7 @@ class ParticipateCart extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              bibNumber,
+              participant.bibNumber,
               style: TextStyle(
                 color: AppColors.secondaryColor,
                 fontWeight: AppTextStyles.body.fontWeight,
@@ -47,14 +40,14 @@ class ParticipateCart extends StatelessWidget {
               ),
             ),
             Text(
-              '$firstName $lastName',
+              '${participant.firstName} ${participant.lastName}',
               style: TextStyle(
                 color: AppColors.secondaryColor,
                 fontWeight: AppTextStyles.body.fontWeight,
               ),
             ),
             Text(
-              age,
+              participant.age.toString(),
               style: TextStyle(
                 color: AppColors.secondaryColor,
                 fontWeight: AppTextStyles.body.fontWeight,
@@ -67,7 +60,7 @@ class ParticipateCart extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: AppColors.thirdColor,
+
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       ),
@@ -78,21 +71,21 @@ class ParticipateCart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                bibNumber,
+                participant.bibNumber,
                 style: TextStyle(
                   color: AppColors.secondaryColor,
                   fontWeight: AppTextStyles.body.fontWeight,
                 ),
               ),
               Text(
-                '$firstName $lastName',
+                '${participant.firstName} ${participant.lastName}',
                 style: TextStyle(
                   color: AppColors.secondaryColor,
                   fontWeight: AppTextStyles.body.fontWeight,
                 ),
               ),
               Text(
-                age,
+                participant.age.toString(),
                 style: TextStyle(
                   color: AppColors.secondaryColor,
                   fontWeight: AppTextStyles.body.fontWeight,
@@ -101,40 +94,44 @@ class ParticipateCart extends StatelessWidget {
             ],
           ),
           Container(color: AppColors.secondaryColor, height: 1),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                onPressed: onDelete,
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: Colors.transparent,
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero,
+          Container(
+            color: AppColors.thirdColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+              children: [
+                ElevatedButton(
+                  onPressed: onDelete,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
+                  child: Text(
+                    'Delete',
+                    style: TextStyle(color: AppColors.primary),
                   ),
                 ),
-                child: Text(
-                  'Delete',
-                  style: TextStyle(color: AppColors.primary),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: onEdit,
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: Colors.transparent,
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero,
+                ElevatedButton(
+                  onPressed: onEdit,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
+                  child: Text(
+                    'Edit',
+                    style: TextStyle(color: AppColors.secondaryColor),
                   ),
                 ),
-                child: Text(
-                  'Edit',
-                  style: TextStyle(color: AppColors.secondaryColor),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

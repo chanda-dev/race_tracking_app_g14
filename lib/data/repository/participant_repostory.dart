@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 abstract class ParticipantRepostory {
   Future<List<Participant>> getAllParticipant();
-  Future<void> addParticipant({
+  Future<Participant> addParticipant({
     required String firstName,
     required String bibNumber,
     required String lastName,

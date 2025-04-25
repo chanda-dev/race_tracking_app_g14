@@ -41,12 +41,13 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
     );
 
     // Handle errors
-    if (response.statusCode != HttpStatus.ok) {
-      throw Exception('Failed to add user');
+    if (response.statusCode != HttpStatus.ok &&
+        response.statusCode != HttpStatus.created) {
+      throw Exception('Failed to add participant');
     }
 
     // Firebase returns the new ID in 'bibNumber'
-    final newId = json.decode(response.body)['bibNumber'];
+    final newId = json.decode(response.body)['name'];
 
     // Return created user
     return Participant(
@@ -55,9 +56,9 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
       age: age,
       lastName: lastName,
       bibNumber: bibNumber,
-      runningTime: const Duration(seconds: 0, minutes: 0, hours: 0),
-      swimmingTime: const Duration(seconds: 0, minutes: 0, hours: 0),
-      cyclingTime: const Duration(seconds: 0, minutes: 0, hours: 0),
+      runningTime: runningTime,
+      swimmingTime: swimmingTime,
+      cyclingTime: cyclingTime,
     );
   }
 
@@ -111,9 +112,9 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
       'firstName': firstName,
       'age': age,
       'lastName': lastName,
-      'runningTime': runningTime,
-      'swimmingTime': swimmingTime,
-      'cyclingTime': cyclingTime,
+      'runningTime': runningTime.inMilliseconds,
+      'swimmingTime': swimmingTime.inMilliseconds,
+      'cyclingTime': cyclingTime.inMilliseconds,
     };
     Uri uriUpdate = Uri.parse('$baseUrl/$participantCollection/$id.json');
     final http.Response response = await http.put(
