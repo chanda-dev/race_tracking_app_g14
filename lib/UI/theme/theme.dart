@@ -42,6 +42,8 @@ class AppTextStyles {
 
   static TextStyle label = TextStyle(fontSize: 13, fontWeight: FontWeight.w400);
 
+  static TextStyle watch = TextStyle(fontSize: 40, fontWeight: FontWeight.w400);
+
   static TextStyle button = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
