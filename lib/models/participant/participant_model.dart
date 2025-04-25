@@ -1,3 +1,5 @@
+enum Mode { update, add }
+
 class Participant {
   final String id;
   final String bibNumber;
