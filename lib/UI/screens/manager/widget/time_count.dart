@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/stop_watch_provider.dart';
@@ -65,20 +63,21 @@ class TimeCount extends StatelessWidget {
     required String time,
     required double fontSize,
     required FontWeight fontWeight,
-  }) => Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Container(
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Text(
-          time,
-          style: TextStyle(fontWeight: fontWeight, fontSize: fontSize),
-        ),
-      ),
-    ],
-  );
+  }) =>
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              time,
+              style: TextStyle(fontWeight: fontWeight, fontSize: fontSize),
+            ),
+          ),
+        ],
+      );
 }
