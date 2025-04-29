@@ -11,29 +11,23 @@ class StartRace extends StatelessWidget {
     return Container(
       color: AppColors.backGroundColor,
       child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Container(
-          width: double.infinity,
-          color: AppColors.backGroundColor,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Time Count',
-                style: TextStyle(
-                  fontSize: AppTextStyles.heading.fontSize,
-                  fontWeight: AppTextStyles.heading.fontWeight,
-                ),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Time Count',
+              style: TextStyle(
+                fontSize: AppTextStyles.heading.fontSize,
+                fontWeight: AppTextStyles.heading.fontWeight,
               ),
-              SizedBox(height: AppSpacings.xl),
-              TimeCount(
+            ),
+            const SizedBox(height: 32),
+            Center(
+              child: TimeCount(
                 fontSize: AppTextStyles.watch.fontSize!,
                 fontWeight: AppTextStyles.watch.fontWeight!,
-              ),
-              SizedBox(height: AppSpacings.xl),
-              Expanded( // Wrap ResultTable with Expanded
-                child: ResultTable(),
               ),
             ],
           ),
