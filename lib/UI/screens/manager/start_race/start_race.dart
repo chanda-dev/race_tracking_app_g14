@@ -29,8 +29,8 @@ class StartRace extends StatelessWidget {
                 fontSize: AppTextStyles.watch.fontSize!,
                 fontWeight: AppTextStyles.watch.fontWeight!,
               ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
