@@ -6,7 +6,6 @@ import 'package:race_tracking_app_g14/UI/screens/form_update_participant.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 import 'package:race_tracking_app_g14/UI/widgets/participate_cart.dart';
 import 'package:race_tracking_app_g14/models/participant/participant_model.dart';
-import 'package:race_tracking_app_g14/utils/animations_util.dart';
 
 class PartTable extends StatefulWidget {
   const PartTable({super.key});

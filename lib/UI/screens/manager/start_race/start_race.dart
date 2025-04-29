@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:race_tracking_app_g14/UI/providers/stop_watch_provider.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/widget/time_count.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
+import 'package:race_tracking_app_g14/UI/widgets/action/race_button.dart';
 
 class StartRace extends StatelessWidget {
   const StartRace({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final stopWatchProvider = Provider.of<StopWatchProvider>(context);
     return Container(
       color: AppColors.backGroundColor,
       child: Padding(
@@ -27,62 +31,30 @@ class StartRace extends StatelessWidget {
               child: TimeCount(
                 fontSize: AppTextStyles.watch.fontSize!,
                 fontWeight: AppTextStyles.watch.fontWeight!,
+                stopWatchProvider: stopWatchProvider,
               ),
             ),
             const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 120,
-                  height: 50,
-                  color: Colors.grey[200], // <-- No border radius = Square
-                  child: TextButton(
-                    onPressed: () {
-                      // tuk ter implementasi
-                    },
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,
-                        // <-- Make it square
-                      ),
-                    ),
-                    child: const Text(
-                      'Reset',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                RaceButton(
+                  text: 'Reset',
+                  color: AppColors.thirdColor,
+                  onClick: stopWatchProvider.resetTimer,
                 ),
                 const SizedBox(width: 20),
-                Container(
-                  width: 120,
-                  height: 50,
-                  color: Colors.green, // <-- No border radius = Square
-                  child: TextButton(
-                    onPressed: () {
-                      //jam ter implementasi
-                    },
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero, // <-- Make it square
-                      ),
+                stopWatchProvider.isStart
+                    ? RaceButton(
+                      text: 'Start',
+                      color: AppColors.green,
+                      onClick: stopWatchProvider.startTimer,
+                    )
+                    : RaceButton(
+                      text: 'Stop',
+                      color: AppColors.green,
+                      onClick: stopWatchProvider.stopTimer,
                     ),
-                    child: const Text(
-                      'Start',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ],

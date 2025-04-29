@@ -1,22 +1,20 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/stop_watch_provider.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 
 class TimeCount extends StatelessWidget {
+  final StopWatchProvider stopWatchProvider;
   final double fontSize;
   final FontWeight fontWeight;
   const TimeCount({
     super.key,
     required this.fontSize,
     required this.fontWeight,
+    required this.stopWatchProvider,
   });
 
   @override
   Widget build(BuildContext context) {
-    final stopWatchProvider = Provider.of<StopWatchProvider>(context);
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     final hours = twoDigits(stopWatchProvider.duration.inHours);
     final minutes = twoDigits(

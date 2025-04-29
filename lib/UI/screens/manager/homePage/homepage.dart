@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/widget/participants_body.dart';
-import 'package:race_tracking_app_g14/utils/animations_util.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});

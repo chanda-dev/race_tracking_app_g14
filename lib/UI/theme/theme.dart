@@ -13,6 +13,8 @@ class AppColors {
 
   static Color white = Colors.white;
 
+  static Color green = Color(0xff00C853);
+
   static Color get primary {
     return AppColors.primarys;
   }
