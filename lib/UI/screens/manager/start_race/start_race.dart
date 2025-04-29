@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:race_tracking_app_g14/UI/screens/manager/widget/result_table.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/widget/time_count.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 
@@ -29,6 +30,10 @@ class StartRace extends StatelessWidget {
               TimeCount(
                 fontSize: AppTextStyles.watch.fontSize!,
                 fontWeight: AppTextStyles.watch.fontWeight!,
+              ),
+              SizedBox(height: AppSpacings.xl),
+              Expanded( // Wrap ResultTable with Expanded
+                child: ResultTable(),
               ),
             ],
           ),

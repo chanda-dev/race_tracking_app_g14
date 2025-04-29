@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:race_tracking_app_g14/UI/theme/theme.dart';
-import 'package:race_tracking_app_g14/models/participant/participant_model.dart';
+import '../../../../models/participant/participant_model.dart';
+import '../../../theme/theme.dart';
 
 class ParticipateCart extends StatelessWidget {
   final Participant participant;
   final bool isClick;
   final VoidCallback onCartPress;
-  final VoidCallback onDelete;
-  final VoidCallback onEdit;
   const ParticipateCart({
     super.key,
     required this.participant,
     required this.isClick,
     required this.onCartPress,
-    required this.onDelete,
-    required this.onEdit,
   });
 
   @override
   Widget build(BuildContext context) {
     if (isClick == false) {
+      String overallTime;
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 0,
@@ -53,6 +50,16 @@ class ParticipateCart extends StatelessWidget {
                 fontWeight: AppTextStyles.body.fontWeight,
               ),
             ),
+            Text(
+              overallTime = (participant.runningTime +
+                      participant.cyclingTime +
+                      participant.swimmingTime)
+                  .toString(),
+              style: TextStyle(
+                color: AppColors.secondaryColor,
+                fontWeight: AppTextStyles.body.fontWeight,
+              ),
+            ),
           ],
         ),
       );
@@ -60,7 +67,6 @@ class ParticipateCart extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 0,
-
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       ),
@@ -98,39 +104,6 @@ class ParticipateCart extends StatelessWidget {
             color: AppColors.thirdColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-              children: [
-                ElevatedButton(
-                  onPressed: onDelete,
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    ),
-                  ),
-                  child: Text(
-                    'Delete',
-                    style: TextStyle(color: AppColors.primary),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: onEdit,
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    ),
-                  ),
-                  child: Text(
-                    'Edit',
-                    style: TextStyle(color: AppColors.secondaryColor),
-                  ),
-                ),
-              ],
             ),
           ),
         ],
