@@ -46,15 +46,15 @@ class StartRace extends StatelessWidget {
                 const SizedBox(width: 20),
                 stopWatchProvider.isStart
                     ? RaceButton(
-                      text: 'Start',
-                      color: AppColors.green,
-                      onClick: stopWatchProvider.startTimer,
-                    )
+                        text: 'Start',
+                        color: AppColors.green,
+                        onClick: stopWatchProvider.startTimer,
+                      )
                     : RaceButton(
-                      text: 'Stop',
-                      color: AppColors.green,
-                      onClick: stopWatchProvider.stopTimer,
-                    ),
+                        text: 'Stop',
+                        color: AppColors.green,
+                        onClick: stopWatchProvider.stopTimer,
+                      ),
               ],
             ),
           ],

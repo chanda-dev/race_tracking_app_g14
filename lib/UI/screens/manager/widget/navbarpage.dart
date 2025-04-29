@@ -58,7 +58,7 @@ class Navbarpage extends StatelessWidget {
                           ? AppColors.backgroundColors
                           : (isSelected
                               ? AppColors.primarys
-                              : AppColors.thirdColors),
+                              : Color(0xFFBDBABA)),
                 ),
               ),
             );

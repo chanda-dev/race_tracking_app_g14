@@ -63,20 +63,21 @@ class TimeCount extends StatelessWidget {
     required String time,
     required double fontSize,
     required FontWeight fontWeight,
-  }) => Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Container(
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Text(
-          time,
-          style: TextStyle(fontWeight: fontWeight, fontSize: fontSize),
-        ),
-      ),
-    ],
-  );
+  }) =>
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              time,
+              style: TextStyle(fontWeight: fontWeight, fontSize: fontSize),
+            ),
+          ),
+        ],
+      );
 }
