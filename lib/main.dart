@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:race_tracking_app_g14/UI/providers/drop_down_provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/participant_provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/stop_watch_provider.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/homePage/homepage.dart';
+import 'package:race_tracking_app_g14/UI/screens/manager/participate_list/participate_list.dart';
+import 'package:race_tracking_app_g14/UI/screens/manager/results/results.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/start_race/start_race.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/widget/navbarpage.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
@@ -18,7 +21,8 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => ParticipantProvider(participantRepostory),
         ),
-        ChangeNotifierProvider(create: (contex) => StopWatchProvider()),
+        ChangeNotifierProvider(create: (context) => StopWatchProvider()),
+        ChangeNotifierProvider(create: (context) => DropDownProvider())
       ],
       child: MyApp(),
     ),
@@ -53,14 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       selectedIndex = index;
     });
-  }
-
-  void onCartPress() {
-    setState(() {
-      isClick = !isClick;
-    });
-
-    print(isClick);
   }
 
   @override
@@ -98,6 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context) {
           if (selectedIndex == 0) {
             return Homepage();
+          } else if (selectedIndex == 3) {
+            return Results();
+          } else if (selectedIndex == 1) {
+            return ParticipateList();
           }
           return Center(child: StartRace());
         },

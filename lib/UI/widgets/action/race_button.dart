@@ -3,19 +3,25 @@ import 'package:flutter/material.dart';
 class RaceButton extends StatelessWidget {
   final String text;
   final Color color;
+  final Color textColor;
+  final double width;
+  final double height;
   final VoidCallback onClick;
   const RaceButton({
     super.key,
     required this.text,
     required this.color,
     required this.onClick,
+    required this.width,
+    required this.height,
+    required this.textColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
-      height: 50,
+      width: width,
+      height: height,
       color: color,
       child: TextButton(
         onPressed: onClick,
@@ -29,7 +35,7 @@ class RaceButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: Colors.black,
+            color: textColor,
             fontSize: 18,
             fontWeight: FontWeight.w500,
           ),

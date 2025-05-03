@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/stop_watch_provider.dart';
+import 'package:race_tracking_app_g14/UI/screens/manager/widget/result_table.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/widget/time_count.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 import 'package:race_tracking_app_g14/UI/widgets/action/race_button.dart';
@@ -17,7 +18,7 @@ class StartRace extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Time Count',
@@ -39,24 +40,46 @@ class StartRace extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RaceButton(
+                  width: 120,
+                  height: 50,
                   text: 'Reset',
                   color: AppColors.thirdColor,
                   onClick: stopWatchProvider.resetTimer,
+                  textColor: AppColors.secondaryColor,
                 ),
                 const SizedBox(width: 20),
                 stopWatchProvider.isStart
                     ? RaceButton(
+                        width: 120,
+                        height: 30,
                         text: 'Start',
                         color: AppColors.green,
                         onClick: stopWatchProvider.startTimer,
+                        textColor: AppColors.secondaryColor,
                       )
                     : RaceButton(
+                        width: 120,
+                        height: 30,
                         text: 'Stop',
                         color: AppColors.green,
                         onClick: stopWatchProvider.stopTimer,
+                        textColor: AppColors.secondaryColor,
                       ),
               ],
             ),
+            Expanded(child: ResultTable()),
+            Column(
+              children: [
+                RaceButton(
+                  height: 27,
+                  width: 104,
+                  text: 'See all',
+                  color: AppColors.primary,
+                  onClick: () {},
+                  textColor: AppColors.white,
+                )
+              ],
+            )
           ],
         ),
       ),

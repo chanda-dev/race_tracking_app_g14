@@ -15,6 +15,14 @@ class AppColors {
 
   static Color green = Color(0xff00C853);
 
+  static Color orange = Color(0xffF9A825);
+
+  static Color cyan = Color(0xff7FDBFF);
+
+  static Color gold = Color(0xffFFF44F);
+
+  static Color running = Color(0xffC7EA46);
+
   static Color get primary {
     return AppColors.primarys;
   }
@@ -43,6 +51,11 @@ class AppTextStyles {
   static TextStyle body = TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 
   static TextStyle label = TextStyle(fontSize: 13, fontWeight: FontWeight.w400);
+
+  static TextStyle dropDown = TextStyle(
+      fontSize: 8,
+      fontWeight: FontWeight.w400,
+      color: AppColors.secondaryColor);
 
   static TextStyle watch = TextStyle(fontSize: 40, fontWeight: FontWeight.w400);
 
