@@ -1,6 +1,7 @@
 enum Mode { update, add }
 
 class Participant {
+  String rank;
   final String id;
   final String bibNumber;
   final String firstName;
@@ -11,6 +12,7 @@ class Participant {
   final Duration cyclingTime;
 
   Participant({
+    required this.rank,
     required this.id,
     required this.bibNumber,
     required this.firstName,

@@ -16,6 +16,7 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
 
   @override
   Future<Participant> addParticipant({
+    required String rank,
     required String bibNumber,
     required int age,
     required String firstName,
@@ -26,6 +27,7 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
   }) async {
     // Create a new data
     final newParticipantData = {
+      'rank': rank,
       'bibNumber': bibNumber,
       'firstName': firstName,
       'lastName': lastName,
@@ -59,6 +61,7 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
       runningTime: runningTime,
       swimmingTime: swimmingTime,
       cyclingTime: cyclingTime,
+      rank: rank,
     );
   }
 
@@ -98,6 +101,7 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
 
   @override
   Future<Participant> updateParticipant({
+    required String rank,
     required String bibNumber,
     required String id,
     required String firstName,
@@ -108,6 +112,7 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
     required Duration cyclingTime,
   }) async {
     final updateParticipant = {
+      'rank': rank,
       'bibNumber': bibNumber,
       'firstName': firstName,
       'age': age,
@@ -130,6 +135,7 @@ class FirebaseParticipantRepository extends ParticipantRepostory {
 
     // Return created user
     return Participant(
+      rank: rank,
       id: id,
       bibNumber: bibNumber,
       firstName: firstName,

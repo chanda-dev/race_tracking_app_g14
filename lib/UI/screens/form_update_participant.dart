@@ -20,27 +20,57 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
   final TextEditingController _ageController = TextEditingController();
 
   void onAddParticipant(BuildContext context) {
+    String rank = '0';
+    int bibNumber = 0;
+
     if (_globalKey.currentState!.validate()) {
       String firstName = _firstNameController.text;
       String lastName = _lastNameController.text;
       int age = int.tryParse(_ageController.text) ?? 0;
+
+      final ParticipantProvider participantProvider =
+          context.read<ParticipantProvider>();
+      List<Participant> participants =
+          participantProvider.participantState!.data!;
+
       if (widget.mode == Mode.add) {
-        final ParticipantProvider participantProvider =
-            context.read<ParticipantProvider>();
-        List<Participant> participants =
-            participantProvider.participantState!.data!;
-        int bibNumber = participants.length + 1;
+        // Compute rank and bib number for new participant
+        if (participants.isEmpty) {
+          rank = '1';
+          bibNumber = 1;
+        } else {
+          // Sort participants by total time (ascending)
+          participants.sort((a, b) {
+            final aTotalTime = a.runningTime + a.swimmingTime + a.cyclingTime;
+            final bTotalTime = b.runningTime + b.swimmingTime + b.cyclingTime;
+            return aTotalTime.compareTo(bTotalTime);
+          });
+
+          // Assign rank based on sorted order
+          for (int i = 0; i < participants.length; i++) {
+            participants[i].rank = (i + 1).toString();
+          }
+
+          // New participant gets the next bib number and rank
+          bibNumber = int.parse(participants.last.bibNumber) + 1;
+          rank = (participants.length + 1).toString();
+        }
+
+        // Add the new participant
         participantProvider.addParticipant(
+          rank,
           bibNumber.toString(),
           firstName,
           lastName,
           age,
         );
+
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
         Navigator.pop(context);
       } else {
-        final ParticipantProvider participantProvider =
-            context.read<ParticipantProvider>();
+        // Update existing participant
         participantProvider.updateParticipant(
+          widget.participant!.rank,
           widget.participant!.id,
           widget.participant!.bibNumber,
           firstName,
@@ -50,6 +80,7 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
           widget.participant!.swimmingTime,
           widget.participant!.cyclingTime,
         );
+
         Navigator.pop(context);
       }
     }

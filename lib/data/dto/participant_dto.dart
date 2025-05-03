@@ -3,6 +3,7 @@ import 'package:race_tracking_app_g14/models/participant/participant_model.dart'
 class ParticipantDto {
   static Map<String, dynamic> toJson(Participant model) {
     return {
+      'rank': model.rank,
       'bibNumber': model.bibNumber,
       'firstName': model.firstName,
       'lastName': model.lastName,
@@ -15,6 +16,7 @@ class ParticipantDto {
 
   static Participant fromJson(String id, Map<String, dynamic> json) {
     return Participant(
+      rank: json['rank'] ?? '',
       id: id,
       bibNumber: json['bibNumber'] ?? '',
       firstName: json['firstName'] ?? '',

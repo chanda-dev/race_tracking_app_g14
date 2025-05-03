@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:race_tracking_app_g14/UI/widgets/action/race_button.dart';
 import '../../../../models/participant/participant_model.dart';
 import '../../../providers/async_value.dart';
 import '../../../providers/participant_provider.dart';
 import '../../../theme/theme.dart';
-import 'participants_card.dart';
+import 'result_participants_card.dart';
 
 class ResultTable extends StatelessWidget {
   const ResultTable({super.key});
@@ -30,7 +31,7 @@ class ResultTable extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'Record Top 10',
+                    'Record',
                     style: TextStyle(
                       fontSize: AppTextStyles.heading.fontSize,
                       fontWeight: AppTextStyles.heading.fontWeight,
@@ -57,12 +58,13 @@ class ResultTable extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          Text('RANK',
+                              style: TextStyle(color: AppColors.white)),
                           Text('BIB', style: TextStyle(color: AppColors.white)),
                           Text(
                             'NAME',
                             style: TextStyle(color: AppColors.white),
                           ),
-                          Text('AGE', style: TextStyle(color: AppColors.white)),
                           Text(
                             'OVERALL TIME',
                             style: TextStyle(color: AppColors.white),
@@ -82,16 +84,8 @@ class ResultTable extends StatelessWidget {
                                 vertical: 8.0,
                                 horizontal: 16,
                               ),
-                              child: ParticipateCart(
+                              child: ResultParticipantsCard(
                                 participant: fetchParticipant[index],
-                                isClick: false, // Replace with actual logic
-                                onCartPress: () {}, // Replace with actual logic
-                                // additionalInfo: Text(
-                                //   fetchParticipant[index].overallTime ?? 'N/A',
-                                //   style: TextStyle(
-                                //     color: AppColors.textSecondary,
-                                //   ),
-                                // ),
                               ),
                             );
                           },

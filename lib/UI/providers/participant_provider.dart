@@ -23,9 +23,13 @@ class ParticipantProvider extends ChangeNotifier {
     try {
       participantState = AsyncValue.loading();
       notifyListeners();
-      participantState = AsyncValue.success(
-        await _repository.getAllParticipant(),
-      );
+      final participants = await _repository.getAllParticipant();
+      participants.sort((a, b) {
+        final aTotalTime = a.runningTime + a.swimmingTime + a.cyclingTime;
+        final bTotalTime = b.runningTime + b.swimmingTime + b.cyclingTime;
+        return aTotalTime.compareTo(bTotalTime);
+      });
+      participantState = AsyncValue.success(participants);
     } catch (error) {
       participantState = AsyncValue.error(error);
     }
@@ -33,6 +37,7 @@ class ParticipantProvider extends ChangeNotifier {
   }
 
   void addParticipant(
+    String rank,
     String bibNumber,
     String firstName,
     String lastName,
@@ -43,6 +48,7 @@ class ParticipantProvider extends ChangeNotifier {
   }) async {
     try {
       final newParticipant = await _repository.addParticipant(
+        rank: rank,
         firstName: firstName,
         bibNumber: bibNumber,
         lastName: lastName,
@@ -57,16 +63,6 @@ class ParticipantProvider extends ChangeNotifier {
         notifyListeners();
       }
 
-      // await _repository.addParticipant(
-      //   firstName: firstName,
-      //   bibNumber: bibNumber,
-      //   lastName: lastName,
-      //   age: age,
-      //   swimmingTime: swimmingTime,
-      //   runningTime: runningTime,
-      //   cyclingTime: cyclingTime,
-      // );
-
       fetchParticipant();
     } catch (error) {
       throw Exception('Failed to add participant: $error');
@@ -74,6 +70,7 @@ class ParticipantProvider extends ChangeNotifier {
   }
 
   void updateParticipant(
+    String rank,
     String id,
     String bibNumber,
     String firstName,
@@ -93,6 +90,7 @@ class ParticipantProvider extends ChangeNotifier {
         cyclingTime: cyclingTime,
         runningTime: runningTime,
         swimmingTime: swimmingTime,
+        rank: rank,
       );
       fetchParticipant();
     } catch (error) {
@@ -106,13 +104,13 @@ class ParticipantProvider extends ChangeNotifier {
       if (index == -1) {
         throw Exception("Student of id $id not found in the cache");
       }
-      final removedStudent = participantState!.data![index];
+      final removedParticipant = participantState!.data![index];
       participantState!.data!.removeAt(index);
       notifyListeners();
       try {
         await _repository.deleteParticipant(id: id);
       } catch (error) {
-        participantState!.data!.insert(index, removedStudent);
+        participantState!.data!.insert(index, removedParticipant);
         notifyListeners();
       }
     } else {
@@ -127,6 +125,7 @@ class ParticipantProvider extends ChangeNotifier {
 
       try {
         await _repository.addParticipant(
+          rank: participant.rank,
           firstName: participant.firstName,
           bibNumber: participant.bibNumber,
           lastName: participant.lastName,

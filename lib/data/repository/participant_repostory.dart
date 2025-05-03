@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 abstract class ParticipantRepostory {
   Future<List<Participant>> getAllParticipant();
   Future<Participant> addParticipant({
+    required String rank,
     required String firstName,
     required String bibNumber,
     required String lastName,
@@ -13,6 +14,7 @@ abstract class ParticipantRepostory {
     required Duration cyclingTime,
   });
   Future<void> updateParticipant({
+    required String rank,
     required String id,
     required String firstName,
     required String bibNumber,
