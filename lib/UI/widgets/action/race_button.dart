@@ -6,6 +6,7 @@ class RaceButton extends StatelessWidget {
   final Color textColor;
   final double width;
   final double height;
+  final double fontSize;
   final VoidCallback onClick;
   const RaceButton({
     super.key,
@@ -15,6 +16,7 @@ class RaceButton extends StatelessWidget {
     required this.width,
     required this.height,
     required this.textColor,
+    required this.fontSize,
   });
 
   @override
@@ -36,7 +38,7 @@ class RaceButton extends StatelessWidget {
           text,
           style: TextStyle(
             color: textColor,
-            fontSize: 18,
+            fontSize: fontSize,
             fontWeight: FontWeight.w500,
           ),
         ),

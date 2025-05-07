@@ -3,25 +3,25 @@ import 'package:race_tracking_app_g14/UI/providers/stop_watch_provider.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 
 class TimeCount extends StatelessWidget {
-  final StopWatchProvider stopWatchProvider;
+  final Duration duration;
   final double fontSize;
   final FontWeight fontWeight;
   const TimeCount({
     super.key,
     required this.fontSize,
     required this.fontWeight,
-    required this.stopWatchProvider,
+    required this.duration,
   });
 
   @override
   Widget build(BuildContext context) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final hours = twoDigits(stopWatchProvider.duration.inHours);
+    final hours = twoDigits(duration.inHours);
     final minutes = twoDigits(
-      stopWatchProvider.duration.inMinutes.remainder(60),
+      duration.inMinutes.remainder(60),
     );
     final seconds = twoDigits(
-      stopWatchProvider.duration.inSeconds.remainder(60),
+      duration.inSeconds.remainder(60),
     );
     return Center(
       child: Column(

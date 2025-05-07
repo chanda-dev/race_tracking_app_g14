@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/stop_watch_provider.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/widget/result_table.dart';
-import 'package:race_tracking_app_g14/UI/screens/manager/widget/time_count.dart';
+import 'package:race_tracking_app_g14/UI/widgets/time_count.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 import 'package:race_tracking_app_g14/UI/widgets/action/race_button.dart';
 
@@ -32,7 +32,7 @@ class StartRace extends StatelessWidget {
               child: TimeCount(
                 fontSize: AppTextStyles.watch.fontSize!,
                 fontWeight: AppTextStyles.watch.fontWeight!,
-                stopWatchProvider: stopWatchProvider,
+                duration: stopWatchProvider.duration,
               ),
             ),
             const SizedBox(height: 32),
@@ -46,24 +46,27 @@ class StartRace extends StatelessWidget {
                   color: AppColors.thirdColor,
                   onClick: stopWatchProvider.resetTimer,
                   textColor: AppColors.secondaryColor,
+                  fontSize: 18,
                 ),
                 const SizedBox(width: 20),
                 stopWatchProvider.isStart
                     ? RaceButton(
                         width: 120,
-                        height: 30,
+                        height: 50,
                         text: 'Start',
                         color: AppColors.green,
                         onClick: stopWatchProvider.startTimer,
                         textColor: AppColors.secondaryColor,
+                        fontSize: 18,
                       )
                     : RaceButton(
                         width: 120,
-                        height: 30,
+                        height: 50,
                         text: 'Stop',
                         color: AppColors.green,
                         onClick: stopWatchProvider.stopTimer,
                         textColor: AppColors.secondaryColor,
+                        fontSize: 18,
                       ),
               ],
             ),
@@ -77,6 +80,7 @@ class StartRace extends StatelessWidget {
                   color: AppColors.primary,
                   onClick: () {},
                   textColor: AppColors.white,
+                  fontSize: 18,
                 )
               ],
             )
