@@ -3,6 +3,17 @@ import 'package:race_tracking_app_g14/UI/providers/async_value.dart';
 import 'package:race_tracking_app_g14/data/repository/participant_repostory.dart';
 import 'package:race_tracking_app_g14/models/participant/participant_model.dart';
 
+enum Segment {
+  running('Running', Icons.directions_run),
+  swimming('Swimming', Icons.pool),
+  cycling('Cycling', Icons.directions_bike);
+
+  final String name;
+  final IconData icon;
+
+  const Segment(this.name, this.icon);
+}
+
 class ParticipantProvider extends ChangeNotifier {
   final ParticipantRepostory _repository;
 

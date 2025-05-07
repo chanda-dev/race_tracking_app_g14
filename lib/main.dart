@@ -8,6 +8,7 @@ import 'package:race_tracking_app_g14/UI/screens/manager/participate_list/partic
 import 'package:race_tracking_app_g14/UI/screens/manager/results/results.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/start_race/start_race.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/widget/navbarpage.dart';
+import 'package:race_tracking_app_g14/UI/screens/tracker/screen/time_tracking.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 import 'package:race_tracking_app_g14/data/repository/firebase_participant_repository.dart';
 import 'package:race_tracking_app_g14/data/repository/participant_repostory.dart';
@@ -93,11 +94,16 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Builder(
         builder: (BuildContext context) {
           if (selectedIndex == 0) {
-            return Homepage();
+            return Homepage(
+              amount: '26',
+              onClick: () {},
+            );
           } else if (selectedIndex == 3) {
             return Results();
           } else if (selectedIndex == 1) {
             return ParticipateList();
+          } else if (selectedIndex == 4) {
+            return TimeTracking();
           }
           return Center(child: StartRace());
         },

@@ -76,7 +76,7 @@ class AppSpacings {
   static const double xl = 32;
   static const double xxl = 40;
 
-  static const double radius = 16;
+  static const double radius = 7;
   static const double radiusLarge = 24;
 }
 
