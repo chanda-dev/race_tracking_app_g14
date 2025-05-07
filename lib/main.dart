@@ -94,7 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Builder(
         builder: (BuildContext context) {
           if (selectedIndex == 0) {
-            return Homepage();
+            return Homepage(
+              amount: '26',
+              onClick: () {},
+            );
           } else if (selectedIndex == 3) {
             return Results();
           } else if (selectedIndex == 1) {
