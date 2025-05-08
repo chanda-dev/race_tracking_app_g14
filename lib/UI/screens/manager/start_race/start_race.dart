@@ -55,7 +55,7 @@ class StartRace extends StatelessWidget {
                         height: 50,
                         text: 'Start',
                         color: AppColors.green,
-                        onClick: stopWatchProvider.startTimer,
+                        onClick: () => stopWatchProvider.startTimer(context),
                         textColor: AppColors.secondaryColor,
                         fontSize: 18,
                       )
