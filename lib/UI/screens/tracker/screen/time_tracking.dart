@@ -7,31 +7,85 @@ import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 import 'package:race_tracking_app_g14/UI/widgets/time_count.dart';
 
 class TimeTracking extends StatelessWidget {
-  const TimeTracking({super.key});
+  final Segment segment;
+  const TimeTracking({super.key, required this.segment});
 
   @override
   Widget build(BuildContext context) {
     final participantProvider = Provider.of<ParticipantProvider>(context);
-    return Container(
-      color: AppColors.backGroundColor,
-      child: Padding(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SegmentBackButton(text: 'Swimming'),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-              child: TimeCount(
+
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColors.backGroundColor,
+        elevation: 1.0,
+        shadowColor: AppColors.thirdColor,
+        title: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'RACE TRACKING ',
+                style: TextStyle(
+                  color: AppColors.secondaryColor,
+                  fontSize: AppTextStyles.heading.fontSize,
+                  fontWeight: AppTextStyles.heading.fontWeight,
+                ),
+              ),
+              Text(
+                'APP',
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontSize: AppTextStyles.heading.fontSize,
+                  fontWeight: AppTextStyles.heading.fontWeight,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: Container(
+        color: AppColors.backGroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  TextButton.icon(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: AppColors.primary,
+                        size: AppTextStyles.title.fontSize,
+                      ),
+                      label: Text(
+                        segment.name,
+                        style: TextStyle(
+                            color: AppColors.secondaryColor,
+                            fontSize: AppTextStyles.title.fontSize),
+                      )),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
+                child: TimeCount(
                   fontSize: AppTextStyles.watch.fontSize!,
                   fontWeight: AppTextStyles.watch.fontWeight!,
-                  duration: Duration(hours: 0, minutes: 0, seconds: 0)),
-            ),
-            Expanded(
+                  duration: const Duration(hours: 0, minutes: 0, seconds: 0),
+                ),
+              ),
+              Expanded(
                 child: TrackingTable(
-              participantProvider: participantProvider,
-            ))
-          ],
+                  participantProvider: participantProvider,
+                  segment: segment,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

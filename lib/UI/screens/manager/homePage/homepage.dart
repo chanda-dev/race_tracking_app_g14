@@ -6,7 +6,7 @@ import 'package:race_tracking_app_g14/UI/widgets/action/segment_card_button.dart
 
 class Homepage extends StatelessWidget {
   final String amount;
-  final Function onClick;
+  final Function(Segment) onClick;
 
   const Homepage({super.key, required this.amount, required this.onClick});
 
@@ -53,7 +53,6 @@ class Homepage extends StatelessWidget {
               ),
             ),
           ),
-
           // Table of participants
           ParticipantsBody(),
         ],

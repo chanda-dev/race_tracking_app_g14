@@ -10,7 +10,9 @@ import '../../../theme/theme.dart';
 
 class TrackingTable extends StatelessWidget {
   final ParticipantProvider participantProvider;
-  const TrackingTable({super.key, required this.participantProvider});
+  final Segment segment;
+  const TrackingTable(
+      {super.key, required this.participantProvider, required this.segment});
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +63,11 @@ class TrackingTable extends StatelessWidget {
                         child: ListView.builder(
                           itemCount: fetchParticipant.length,
                           itemBuilder: (context, index) {
+                            final currentDuration = segment == Segment.running
+                                ? fetchParticipant[index].runningTime
+                                : segment == Segment.swimming
+                                    ? fetchParticipant[index].swimmingTime
+                                    : fetchParticipant[index].cyclingTime;
                             return Padding(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 8.0,
@@ -91,12 +98,13 @@ class TrackingTable extends StatelessWidget {
                                         fontSize: AppTextStyles.label.fontSize!,
                                         fontWeight:
                                             AppTextStyles.label.fontWeight!,
-                                        duration: Duration(
-                                            hours: 0, minutes: 0, seconds: 0)),
+                                        duration: currentDuration),
                                     Row(
                                       children: [
                                         IconButton(
-                                            onPressed: () {},
+                                            onPressed: () =>
+                                                participantProvider.stopTimer(
+                                                    fetchParticipant[index]),
                                             icon: Icon(
                                               Icons.timer_off,
                                               color: AppColors.primary,
@@ -105,7 +113,9 @@ class TrackingTable extends StatelessWidget {
                                         RaceButton(
                                           text: 'Finished',
                                           color: AppColors.green,
-                                          onClick: () {},
+                                          onClick: () =>
+                                              participantProvider.finishedTimer(
+                                                  fetchParticipant[index]),
                                           width: 50,
                                           height: 17,
                                           textColor: AppColors.secondaryColor,

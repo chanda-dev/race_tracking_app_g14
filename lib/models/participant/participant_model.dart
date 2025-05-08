@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:race_tracking_app_g14/UI/providers/participant_provider.dart';
+
 enum Mode { update, add }
 
 class Participant {
@@ -7,21 +11,24 @@ class Participant {
   final String firstName;
   final String lastName;
   final int age;
-  final Duration runningTime;
-  final Duration swimmingTime;
-  final Duration cyclingTime;
+  Duration runningTime;
+  Duration swimmingTime;
+  Duration cyclingTime;
+  Segment currentSegment;
+  Timer? timer;
 
-  Participant({
-    required this.rank,
-    required this.id,
-    required this.bibNumber,
-    required this.firstName,
-    required this.lastName,
-    required this.age,
-    required this.runningTime,
-    required this.swimmingTime,
-    required this.cyclingTime,
-  });
+  Participant(
+      {required this.rank,
+      required this.id,
+      required this.bibNumber,
+      required this.firstName,
+      required this.lastName,
+      required this.age,
+      required this.runningTime,
+      required this.swimmingTime,
+      required this.cyclingTime,
+      this.currentSegment = Segment.running,
+      this.timer});
 
   @override
   bool operator ==(Object other) {

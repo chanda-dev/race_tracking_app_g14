@@ -60,6 +60,15 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void onGoToTimeTraking(Segment segment) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => TimeTracking(
+                  segment: segment,
+                )));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,14 +105,16 @@ class _HomeScreenState extends State<HomeScreen> {
           if (selectedIndex == 0) {
             return Homepage(
               amount: '26',
-              onClick: () {},
+              onClick: onGoToTimeTraking,
             );
           } else if (selectedIndex == 3) {
             return Results();
           } else if (selectedIndex == 1) {
             return ParticipateList();
           } else if (selectedIndex == 4) {
-            return TimeTracking();
+            return Center(
+              child: Text('Profile'),
+            );
           }
           return Center(child: StartRace());
         },

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:race_tracking_app_g14/UI/providers/async_value.dart';
 import 'package:race_tracking_app_g14/data/repository/participant_repostory.dart';
@@ -6,7 +8,8 @@ import 'package:race_tracking_app_g14/models/participant/participant_model.dart'
 enum Segment {
   running('Running', Icons.directions_run),
   swimming('Swimming', Icons.pool),
-  cycling('Cycling', Icons.directions_bike);
+  cycling('Cycling', Icons.directions_bike),
+  finish('finish', Icons.close);
 
   final String name;
   final IconData icon;
@@ -149,5 +152,89 @@ class ParticipantProvider extends ChangeNotifier {
         throw Exception('Failed to undo delete: $error');
       }
     }
+  }
+
+  void startAllTimers() {
+    final participants = participantState?.data ?? [];
+    for (var participant in participants) {
+      participant.timer ??= Timer.periodic(const Duration(seconds: 1), (_) {
+        if (participant.currentSegment == Segment.running) {
+          participant.runningTime += const Duration(seconds: 1);
+        } else if (participant.currentSegment == Segment.swimming) {
+          participant.swimmingTime += const Duration(seconds: 1);
+        } else if (participant.currentSegment == Segment.cycling) {
+          participant.cyclingTime += const Duration(seconds: 1);
+        }
+        notifyListeners();
+      });
+    }
+  }
+
+  void startTimer(Participant part) {
+    final participant = participantState!.data!.firstWhere(
+      (p) => p.id == part.id,
+      orElse: () => throw Exception('Participant not found'),
+    );
+    participant.timer ??= Timer.periodic(Duration(seconds: 1), (_) {
+      if (participant.currentSegment == Segment.running) {
+        participant.runningTime += Duration(seconds: 1);
+      } else if (participant.currentSegment == Segment.swimming) {
+        participant.swimmingTime += Duration(seconds: 1);
+      } else {
+        participant.cyclingTime += Duration(seconds: 1);
+      }
+      notifyListeners();
+    });
+  }
+
+  void stopTimer(Participant part) {
+    final participant = participantState!.data!.firstWhere(
+      (p) => p.id == part.id,
+      orElse: () => throw Exception('Participant not found'),
+    );
+    participant.timer?.cancel();
+    participant.timer = null;
+    notifyListeners();
+  }
+
+  void finishedTimer(Participant part) async {
+    // Find the participant
+    final participant = participantState!.data!.firstWhere(
+      (p) => p.id == part.id,
+      orElse: () => throw Exception('Participant not found'),
+    );
+
+    // Stop the timer for the specific participant
+    stopTimer(participant);
+
+    // Save the current segment time to the database
+    await _repository.updateParticipant(
+      id: participant.id,
+      firstName: participant.firstName,
+      bibNumber: participant.bibNumber,
+      lastName: participant.lastName,
+      age: participant.age,
+      cyclingTime: participant.cyclingTime,
+      runningTime: participant.runningTime,
+      swimmingTime: participant.swimmingTime,
+      rank: participant.rank,
+    );
+
+    // Move to the next segment
+    if (participant.currentSegment == Segment.running) {
+      participant.currentSegment = Segment.swimming;
+    } else if (participant.currentSegment == Segment.swimming) {
+      participant.currentSegment = Segment.cycling;
+    } else if (participant.currentSegment == Segment.cycling) {
+      participant.currentSegment = Segment.finish; // Mark as finished
+    }
+
+    // Restart the timer for the next segment
+    if (participant.currentSegment != Segment.finish) {
+      startTimer(participant);
+    }
+
+    // Notify listeners to update the UI for this specific participant
+    notifyListeners();
   }
 }
