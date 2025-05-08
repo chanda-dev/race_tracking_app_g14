@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:race_tracking_app_g14/UI/providers/async_value.dart';
+import 'package:race_tracking_app_g14/UI/providers/noti_service.dart';
 import 'package:race_tracking_app_g14/data/repository/participant_repostory.dart';
 import 'package:race_tracking_app_g14/models/participant/participant_model.dart';
 
@@ -167,6 +168,10 @@ class ParticipantProvider extends ChangeNotifier {
         }
         notifyListeners();
       });
+      NotiService().showNotification(
+          title: "Race Start",
+          body: 'The race has start',
+          payload: 'The race has start! Time Tracker prepare');
     }
   }
 
@@ -183,6 +188,12 @@ class ParticipantProvider extends ChangeNotifier {
       } else {
         participant.cyclingTime += Duration(seconds: 1);
       }
+      // NotiService().showNotification(
+      //     title: "Participant Complete",
+      //     body:
+      //         'Participant ${participant.bibNumber} has start the segment ${participant.currentSegment.name}',
+      //     payload:
+      //         ' participant ${participant.bibNumber} has start the segment ${participant.currentSegment.name}');
       notifyListeners();
     });
   }
@@ -194,6 +205,12 @@ class ParticipantProvider extends ChangeNotifier {
     );
     participant.timer?.cancel();
     participant.timer = null;
+    NotiService().showNotification(
+        title: "Participant Complete",
+        body:
+            'Untrack participant ${participant.bibNumber} on segment ${participant.currentSegment.name}',
+        payload:
+            'Timer Tracker has untrack the participant ${participant.bibNumber} in segment ${participant.currentSegment.name}');
     notifyListeners();
   }
 
@@ -206,6 +223,13 @@ class ParticipantProvider extends ChangeNotifier {
 
     // Stop the timer for the specific participant
     stopTimer(participant);
+
+    NotiService().showNotification(
+        title: "Participant Complete",
+        body:
+            'Participant ${participant.bibNumber} has finish ${participant.currentSegment.name}',
+        payload:
+            ' participant ${participant.bibNumber} has finished the segment ${participant.currentSegment.name}');
 
     // Save the current segment time to the database
     await _repository.updateParticipant(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/drop_down_provider.dart';
+import 'package:race_tracking_app_g14/UI/providers/noti_service.dart';
 import 'package:race_tracking_app_g14/UI/providers/participant_provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/stop_watch_provider.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/homePage/homepage.dart';
@@ -8,14 +9,18 @@ import 'package:race_tracking_app_g14/UI/screens/manager/participate_list/partic
 import 'package:race_tracking_app_g14/UI/screens/manager/results/results.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/start_race/start_race.dart';
 import 'package:race_tracking_app_g14/UI/screens/manager/widget/navbarpage.dart';
+import 'package:race_tracking_app_g14/UI/screens/notification/notification_page.dart';
 import 'package:race_tracking_app_g14/UI/screens/tracker/screen/time_tracking.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 import 'package:race_tracking_app_g14/data/repository/firebase_participant_repository.dart';
 import 'package:race_tracking_app_g14/data/repository/participant_repostory.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
   final ParticipantRepostory participantRepostory =
       FirebaseParticipantRepository();
+  WidgetsFlutterBinding.ensureInitialized();
+  NotiService().initNotification();
   runApp(
     MultiProvider(
       providers: [
@@ -36,9 +41,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomeScreen(),
+        '/notification': (context) => NotificationPage()
+      },
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: const HomeScreen(), // Call a new HomeScreen widget
     );
   }
 }
