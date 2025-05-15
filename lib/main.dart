@@ -24,7 +24,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        Provider<NotiService>(create: (context)=>NotiService()),
+        Provider<NotiService>(create: (context) => NotiService()),
         ChangeNotifierProvider(
           create: (context) => ParticipantProvider(participantRepostory),
         ),
@@ -84,6 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final participantProvider = Provider.of<ParticipantProvider>(context);
+    String participantAmount =
+        participantProvider.participantState!.data!.length.toString();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.backGroundColor,
@@ -117,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context) {
           if (selectedIndex == 0) {
             return Homepage(
-              amount: '26',
+              amount: participantAmount,
               onClick: onGoToTimeTraking,
             );
           } else if (selectedIndex == 3) {
