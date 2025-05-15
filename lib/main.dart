@@ -20,10 +20,11 @@ void main() {
   final ParticipantRepostory participantRepostory =
       FirebaseParticipantRepository();
   WidgetsFlutterBinding.ensureInitialized();
-  NotiService().initNotification();
+  // NotiService().initNotification();
   runApp(
     MultiProvider(
       providers: [
+        Provider<NotiService>(create: (context)=>NotiService()),
         ChangeNotifierProvider(
           create: (context) => ParticipantProvider(participantRepostory),
         ),
@@ -40,6 +41,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<NotiService>(context, listen: false).initNotification();
+
     return MaterialApp(
       navigatorKey: navigatorKey,
       initialRoute: '/',
