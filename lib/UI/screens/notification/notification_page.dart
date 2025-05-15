@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
@@ -12,12 +13,15 @@ class NotificationPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Notification Page'),
       ),
-      body: Center(
-        child: Text(
-          payload != null
-              ? 'Notification Payload: $payload'
-              : 'No payload received',
-          style: const TextStyle(fontSize: 18),
+      body: Container(
+        color: AppColors.secondaryColor,
+        child: Center(
+          child: Text(
+            payload != null
+                ? 'Notification Payload: $payload'
+                : 'No Notification received',
+            style: const TextStyle(fontSize: 18),
+          ),
         ),
       ),
     );

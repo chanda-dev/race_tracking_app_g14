@@ -16,6 +16,8 @@ class Participant {
   Duration cyclingTime;
   Segment currentSegment;
   Timer? timer;
+  bool isUntracked;
+  DateTime? untrackTime;
 
   Participant(
       {required this.rank,
@@ -28,7 +30,7 @@ class Participant {
       required this.swimmingTime,
       required this.cyclingTime,
       this.currentSegment = Segment.running,
-      this.timer});
+      this.timer,this.isUntracked = false,this.untrackTime});
 
   @override
   bool operator ==(Object other) {

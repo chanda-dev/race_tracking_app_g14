@@ -261,4 +261,86 @@ class ParticipantProvider extends ChangeNotifier {
     // Notify listeners to update the UI for this specific participant
     notifyListeners();
   }
+
+  void untrackParticipant(Participant participant) async{
+    participant.isUntracked = true;
+    participant.untrackTime = DateTime.now();
+
+    await _repository.updateParticipant(rank: participant.rank, id: participant.id, firstName: participant.firstName, bibNumber:participant.bibNumber, lastName: participant.lastName, age: participant.age, swimmingTime: participant.swimmingTime, runningTime: participant.runningTime, cyclingTime: participant.cyclingTime);
+    updateRankings();
+    notifyListeners();
+    NotiService().showNotification(
+      title: 'Participant Untracked',
+      body: 'Untrack participant ${participant.bibNumber} on segment ${participant.currentSegment.name}',
+
+    );
+
+  }
+
+  void updateRankings() {
+    final participants = participantState!.data!;
+
+    participants.sort((a, b) {
+      if (a.isUntracked && b.isUntracked) {
+        return 0;
+      }
+      if (a.isUntracked) return 1;
+      if (b.isUntracked) return -1;
+
+      Duration aTime = _getSegmentTime(a);
+      Duration bTime = _getSegmentTime(b);
+      return aTime.compareTo(bTime);
+    });
+
+    int rank = 1;
+    for(var i = 0;i<participants.length;i++){
+      final participant = participants[i];
+      if(participant.isUntracked){
+        participant.rank = "DNF";
+      } else {
+        if(i> 0 && !participants[i-1].isUntracked && _getSegmentTime(participant) == _getSegmentTime(participants[i-1])){
+          participant.rank = participants[i-1].rank;
+        } else {
+          participant.rank = rank.toString();
+        }
+        rank++;
+      }
+    }
+  }
+
+  Duration _getSegmentTime(Participant participant) {
+    switch (participant.currentSegment){
+      case Segment.running:
+        return participant.runningTime;
+      case Segment.swimming:
+        return participant.swimmingTime;
+      case Segment.cycling:
+        return participant.cyclingTime;
+      case Segment.finish:
+        return participant.runningTime + participant.swimmingTime + participant.cyclingTime;
+    }
+  }
+
+  void updateParticipantTime(Participant participant, Duration newTime) async {
+    switch (participant.currentSegment) {
+      case Segment.running:
+        participant.runningTime = newTime;
+        break;
+      case Segment.swimming:
+        participant.swimmingTime = newTime;
+        break;
+      case Segment.cycling:
+        participant.cyclingTime = newTime;
+        break;
+      case Segment.finish:
+        break;
+    }
+
+    await _repository.updateParticipant(rank: participant.rank, id: participant.id, firstName: participant.firstName, bibNumber: participant.bibNumber, lastName: participant.lastName, age: participant.age, swimmingTime: participant.swimmingTime, runningTime: participant.runningTime, cyclingTime: participant.cyclingTime);
+    updateRankings();
+    notifyListeners();
+  }
+
+
+
 }

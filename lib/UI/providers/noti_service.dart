@@ -20,7 +20,13 @@ class NotiService extends NotificationRepository {
         requestSoundPermission: true);
     const initSettings = InitializationSettings(
         android: initSettingsAndroid, iOS: initSettingsIOS);
-    await notificationPlugin.initialize(initSettings);
+
+    await notificationPlugin.initialize(
+      initSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        handleNotificationTap(response.payload ?? '');
+      },
+    );
   }
 
   @override
@@ -51,9 +57,8 @@ class NotiService extends NotificationRepository {
 
   @override
   void handleNotificationTap(String payload) {
-    // Handle navigation or other actions based on the payload
     print('Notification tapped with payload: $payload');
-    // Example: Navigate to a specific page
+
     if (navigatorKey.currentState != null) {
       navigatorKey.currentState!.pushNamed('/notification', arguments: payload);
     }

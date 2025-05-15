@@ -80,7 +80,9 @@ class TrackingTable extends StatelessWidget {
                                     Text(
                                       fetchParticipant[index].bibNumber,
                                       style: TextStyle(
-                                        color: AppColors.secondaryColor,
+                                        color: fetchParticipant[index].isUntracked 
+                                            ? AppColors.primary  // or any color to indicate untracked
+                                            : AppColors.secondaryColor,
                                         fontWeight:
                                             AppTextStyles.body.fontWeight,
                                         backgroundColor: AppColors.thirdColor,
@@ -89,38 +91,55 @@ class TrackingTable extends StatelessWidget {
                                     Text(
                                       fetchParticipant[index].lastName,
                                       style: TextStyle(
-                                        color: AppColors.secondaryColor,
+                                        color: fetchParticipant[index].isUntracked 
+                                            ? AppColors.primary 
+                                            : AppColors.secondaryColor,
                                         fontWeight:
                                             AppTextStyles.body.fontWeight,
                                       ),
                                     ),
                                     TimeCount(
                                         fontSize: AppTextStyles.label.fontSize!,
-                                        fontWeight:
-                                            AppTextStyles.label.fontWeight!,
-                                        duration: currentDuration),
+                                        fontWeight: AppTextStyles.label.fontWeight!,
+                                        duration: currentDuration,
+
+                                    ),
                                     Row(
                                       children: [
-                                        IconButton(
-                                            onPressed: () =>
-                                                participantProvider.stopTimer(
-                                                    fetchParticipant[index]),
-                                            icon: Icon(
-                                              Icons.timer_off,
-                                              color: AppColors.primary,
-                                              size: 20,
-                                            )),
-                                        RaceButton(
-                                          text: 'Finished',
-                                          color: AppColors.green,
-                                          onClick: () =>
-                                              participantProvider.finishedTimer(
-                                                  fetchParticipant[index]),
-                                          width: 50,
-                                          height: 17,
-                                          textColor: AppColors.secondaryColor,
-                                          fontSize: 12,
-                                        )
+                                        // Show untracked status instead of controls if participant is untracked
+                                        if (fetchParticipant[index].isUntracked)
+                                          Text('DNF',
+                                            style: TextStyle(
+                                                color: AppColors.primary,
+                                                fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                        else
+                                          // Your existing controls...
+                                          IconButton(
+                                              onPressed: () {
+                            participantProvider.stopTimer(
+                            fetchParticipant[index]);
+                            participantProvider.untrackParticipant(fetchParticipant[index]);
+
+                                              },
+                                               
+                                              icon: Icon(
+                                                Icons.timer_off,
+                                                color: AppColors.primary,
+                                                size: 20,
+                                              )),
+                                              RaceButton(
+                                                text: 'Finished',
+                                                color: AppColors.green,
+                                                onClick: () =>
+                                                    participantProvider.finishedTimer(
+                                                        fetchParticipant[index]),
+                                                width: 50,
+                                                height: 17,
+                                                textColor: AppColors.secondaryColor,
+                                                fontSize: 12,
+                                              )
                                       ],
                                     )
                                   ],
