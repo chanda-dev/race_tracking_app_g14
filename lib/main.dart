@@ -14,6 +14,7 @@ import 'package:race_tracking_app_g14/UI/screens/tracker/screen/time_tracking.da
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
 import 'package:race_tracking_app_g14/data/repository/firebase_participant_repository.dart';
 import 'package:race_tracking_app_g14/data/repository/participant_repostory.dart';
+import 'package:race_tracking_app_g14/models/participant/participant_model.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
@@ -82,11 +83,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 )));
   }
 
+  String getAmount() {
+    String strAmount = '0';
+    final participantProvider = Provider.of<ParticipantProvider>(context);
+    if (participantProvider.hasData) {
+      List<Participant> participants =
+          participantProvider.participantState!.data!;
+      if (participants.isEmpty) {
+        return strAmount;
+      } else {
+        int partLenght = participants.length;
+        strAmount = partLenght.toString();
+      }
+    }
+
+    return strAmount;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final participantProvider = Provider.of<ParticipantProvider>(context);
-    String participantAmount =
-        participantProvider.participantState!.data!.length.toString();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.backGroundColor,
@@ -120,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context) {
           if (selectedIndex == 0) {
             return Homepage(
-              amount: participantAmount,
+              amount: getAmount(),
               onClick: onGoToTimeTraking,
             );
           } else if (selectedIndex == 3) {

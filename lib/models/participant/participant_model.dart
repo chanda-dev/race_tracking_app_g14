@@ -30,7 +30,9 @@ class Participant {
       required this.swimmingTime,
       required this.cyclingTime,
       this.currentSegment = Segment.running,
-      this.timer,this.isUntracked = false,this.untrackTime});
+      this.timer,
+      this.isUntracked = false,
+      this.untrackTime});
 
   @override
   bool operator ==(Object other) {
