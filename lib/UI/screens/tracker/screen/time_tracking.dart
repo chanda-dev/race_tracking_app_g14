@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:race_tracking_app_g14/UI/providers/participant_provider.dart';
+import 'package:race_tracking_app_g14/UI/providers/stop_watch_provider.dart';
 import 'package:race_tracking_app_g14/UI/screens/tracker/widget/segment_back_button.dart';
 import 'package:race_tracking_app_g14/UI/screens/tracker/widget/tracking_table.dart';
 import 'package:race_tracking_app_g14/UI/theme/theme.dart';
@@ -13,7 +14,7 @@ class TimeTracking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final participantProvider = Provider.of<ParticipantProvider>(context);
-
+    final stopWatchProvider = Provider.of<StopWatchProvider>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -75,7 +76,7 @@ class TimeTracking extends StatelessWidget {
                 child: TimeCount(
                   fontSize: AppTextStyles.watch.fontSize!,
                   fontWeight: AppTextStyles.watch.fontWeight!,
-                  duration: const Duration(hours: 0, minutes: 0, seconds: 0),
+                  duration: stopWatchProvider.duration,
                 ),
               ),
               Expanded(
