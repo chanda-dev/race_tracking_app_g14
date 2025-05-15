@@ -22,7 +22,16 @@ class Navbarpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.backGroundColor,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            AppColors.backGroundColor.withOpacity(0.0), // Top: transparent
+            AppColors.backGroundColor.withOpacity(1.0), // Bottom: solid
+          ],
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Row(
@@ -36,29 +45,25 @@ class Navbarpage extends StatelessWidget {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 padding: const EdgeInsets.all(12),
-                decoration:
-                    isCenter
-                        ? BoxDecoration(
-                          color: AppColors.primarys,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
-                        )
-                        : const BoxDecoration(),
+                decoration: isCenter
+                    ? BoxDecoration(
+                        color: AppColors.primarys,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 10,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      )
+                    : const BoxDecoration(),
                 child: Icon(
                   _icons[index],
                   size: 28,
-                  color:
-                      isCenter
-                          ? AppColors.backgroundColors
-                          : (isSelected
-                              ? AppColors.primarys
-                              : Color(0xFFBDBABA)),
+                  color: isCenter
+                      ? AppColors.backgroundColors
+                      : (isSelected ? AppColors.primarys : Color(0xFFBDBABA)),
                 ),
               ),
             );

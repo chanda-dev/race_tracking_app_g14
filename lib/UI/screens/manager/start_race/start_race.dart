@@ -63,7 +63,7 @@ class StartRace extends StatelessWidget {
                         width: 120,
                         height: 50,
                         text: 'Stop',
-                        color: AppColors.green,
+                        color: Colors.red,
                         onClick: stopWatchProvider.stopTimer,
                         textColor: AppColors.secondaryColor,
                         fontSize: 18,
